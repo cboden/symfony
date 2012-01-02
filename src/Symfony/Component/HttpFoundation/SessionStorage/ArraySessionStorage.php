@@ -86,7 +86,7 @@ class ArraySessionStorage extends AbstractSessionStorage
      */
     public function regenerate($destroy = false)
     {
-        if (!$this->started) {
+        if ($this->options['auto_start'] && !$this->started) {
             $this->start();
         }
 

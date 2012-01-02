@@ -104,7 +104,7 @@ abstract class AbstractSessionStorage implements SessionStorageInterface
      */
     public function getFlashes()
     {
-        if (!$this->started) {
+        if ($this->options['auto_start'] && !$this->started) {
             $this->start();
         }
 
@@ -116,7 +116,7 @@ abstract class AbstractSessionStorage implements SessionStorageInterface
      */
     public function getAttributes()
     {
-        if (!$this->started) {
+        if ($this->options['auto_start'] && !$this->started) {
             $this->start();
         }
 
@@ -226,6 +226,10 @@ abstract class AbstractSessionStorage implements SessionStorageInterface
         // because this is managed by HeaderBag directly (if used).
         if (!isset($this->options['cache_limiter'])) {
             $this->options['cache_limiter'] = 0;
+        }
+
+        if (!isset($this->options['auto_start'])) {
+            $this->options['auto_start'] = 0;
         }
 
         foreach ($this->options as $key => $value) {
